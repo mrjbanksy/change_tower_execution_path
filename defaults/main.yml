@@ -1,0 +1,5 @@
+---
+tower_rest_uri: https://localhost/api/v2/settings/jobs/ 
+tower_user: admin
+tower_tmp_dir: /var/lib/awx/tmp
+...

@@ -1,0 +1,34 @@
+---
+- name: "create {{ tower_tmp_dir }}"
+  file:
+    path: "{{ tower_tmp_dir }}"
+    state: directory
+    mode: 0700
+    owner: awx
+    group: awx
+
+- name: set full fact path
+  set_fact:
+    full_setting_path: "\"AWX_PROOT_BASE_PATH\":\"{{ tower_tmp_dir }}\""
+
+- name: get current value of AWX_PROOT_BASE_PATH
+  uri:
+    url: "{{ tower_rest_uri }}"
+    user: "{{ tower_user }}"
+    password: "{{ tower_admin_password }}"
+    method: GET 
+    validate_certs: false
+    return_content: true
+  register: jobs_settings
+
+- name: "update tower to use the {{ tower_tmp_dir }} directory"
+  uri:
+    url: "{{ tower_rest_uri }}"
+    user: "{{ tower_user }}"
+    password: "{{ tower_admin_password }}"
+    method: PATCH
+    body: '{ {{ full_setting_path }} }'
+    body_format: json
+    validate_certs: false
+  when: full_setting_path not in jobs_settings.content
+...
