@@ -1,23 +1,27 @@
 Role Name
 =========
 
-create_tower_tmp_folder - due to noexec settings on /tmp folder, create new folder and set Tower to use that instead
+change_tower_execution_path - due to noexec settings on /tmp folder or other reasons, create new folder and set Tower to use that instead for its execution folder
 
 Requirements
 ------------
 
-Should be run as part of the Tower install. If not, tower_admin_password will need to be set
+Ansible Tower should already be installed by the time this role is called. This role can be included at the end of the Tower install playbook.
+
+Set tower_user_password. I recommend setting it in a Vault encrypted file and then referencing it within 'defaults/main.yml', for example:
+
+'tower_user_password: "{{ vaulted_tower_user_password }}"'
 
 Role Variables
 --------------
 
 tower_tmp_dir: the new folder for Tower to use. Default: /var/lib/awx/tmp
 
-tower_rest_uri: the uri to the Tower API. Default: https://localhost/api/v2/settings/jobs/
+tower_rest_url: the url to the Tower API. Default: https://localhost/api/v2/settings/jobs/
 
 tower_user: the user to log into Tower with. Default: admin
 
-tower_admin_password: the password to log into Tower with. Default: as part of Tower install, set in group_vars/all/secrets.yaml
+tower_user_password: the password to log into Tower with. Default: not defined
 
 Dependencies
 ------------
@@ -28,13 +32,13 @@ Example Playbook
 ----------------
 
     - hosts: servers
-      tasks:
-        - name: create tower tmp folder
-          include_role:
-            name: create_tower_tmp_folder
+      roles:
+        - role: change_tower_execution_path
 
 License
 -------
+
+GPLv3
 
 
 Author Information

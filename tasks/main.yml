@@ -7,13 +7,13 @@
     owner: awx
     group: awx
 
-- name: set full fact path
+- name: set full setting string
   set_fact:
-    full_setting_path: "\"AWX_PROOT_BASE_PATH\":\"{{ tower_tmp_dir }}\""
+    full_setting_string: "\"AWX_PROOT_BASE_PATH\":\"{{ tower_tmp_dir }}\""
 
 - name: get current value of AWX_PROOT_BASE_PATH
   uri:
-    url: "{{ tower_rest_uri }}"
+    url: "{{ tower_rest_url }}"
     user: "{{ tower_user }}"
     password: "{{ tower_admin_password }}"
     method: GET 
@@ -23,12 +23,12 @@
 
 - name: "update tower to use the {{ tower_tmp_dir }} directory"
   uri:
-    url: "{{ tower_rest_uri }}"
+    url: "{{ tower_rest_url }}"
     user: "{{ tower_user }}"
     password: "{{ tower_admin_password }}"
     method: PATCH
-    body: '{ {{ full_setting_path }} }'
+    body: '{ {{ full_setting_string }} }'
     body_format: json
     validate_certs: false
-  when: full_setting_path not in jobs_settings.content
+  when: full_setting_string not in jobs_settings.content
 ...
