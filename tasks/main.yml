@@ -1,4 +1,9 @@
 ---
+- name: fail if tower_user_password is undefined
+  fail:
+    msg: "tower_user_password is undefined"
+  when: tower_user_password is undefined
+
 - name: "create {{ tower_tmp_dir }}"
   file:
     path: "{{ tower_tmp_dir }}"
@@ -15,7 +20,7 @@
   uri:
     url: "{{ tower_rest_url }}"
     user: "{{ tower_user }}"
-    password: "{{ tower_admin_password }}"
+    password: "{{ tower_user_password }}"
     method: GET 
     validate_certs: false
     return_content: true
@@ -25,7 +30,7 @@
   uri:
     url: "{{ tower_rest_url }}"
     user: "{{ tower_user }}"
-    password: "{{ tower_admin_password }}"
+    password: "{{ tower_user_password }}"
     method: PATCH
     body: '{ {{ full_setting_string }} }'
     body_format: json
