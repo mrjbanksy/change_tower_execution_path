@@ -2,7 +2,7 @@
 - name: fail if tower_user_password is not set
   fail:
     msg: "tower_user_password is not set"
-  when: tower_user_password is undefined or tower_user_password == ""
+  when: tower_user_password is undefined or tower_user_password is none or tower_user_password | trim == ''
 
 - name: "create {{ tower_tmp_dir }}"
   file:
