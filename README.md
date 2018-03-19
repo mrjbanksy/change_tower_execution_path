@@ -8,9 +8,9 @@ Requirements
 
 Ansible Tower should already be installed by the time this role is called. This role can be included at the end of the Tower install playbook.
 
-Set tower_user_password. I recommend setting it in a Vault encrypted file and then referencing it within 'defaults/main.yml', for example:
+Set tower_user_password. I recommend setting it in a Vault encrypted file and then referencing it within `defaults/main.yml`, for example:
 
-'tower_user_password: "{{ vaulted_tower_user_password }}"'
+`tower_user_password: "{{ vaulted_tower_user_password }}"`
 
 Role Variables
 --------------
