@@ -10,7 +10,6 @@ Ansible Tower should already be installed by the time this role is called. This 
 
 Provide tower_user_password. I recommend setting it in a Vault encrypted file and then passing it to the role like in the example playbook below.
 
-
 Role Variables
 --------------
 
