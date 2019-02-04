@@ -2,5 +2,4 @@
 tower_tmp_dir: /var/lib/awx/tmp
 tower_rest_url: https://localhost/api/v2/settings/jobs/ 
 tower_user: admin
-tower_user_password:
 ...
